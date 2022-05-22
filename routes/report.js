@@ -4,17 +4,13 @@ const verifyJWT = require('../middleware/verifyAuth')
 
 const { 
   addReport,
-  listReports 
+  listReports,
+  executeReport
 } = require('../controllers/report.controller');
 
-routes.get('/', verifyJWT, (req, res) =>{
-  res.send({
-    "name": "Faturamento Diário",
-    "Role": "Faturamento"
-  })
-})
+routes.get('/list', verifyJWT, listReports);
+routes.get('/execute', verifyJWT, executeReport);
 
-routes.get('/list', listReports)
-routes.post('/register', addReport)
+routes.post('/register', addReport);
 
 module.exports = routes;

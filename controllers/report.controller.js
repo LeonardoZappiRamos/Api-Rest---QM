@@ -1,9 +1,10 @@
 const fs = require('fs');
+
 require('dotenv').config();
 
 const dirname = process.env.DIR_REPORTS.toString();
 
-const addReport = async (req, res) =>{
+const addReport = async (req, res) => {
 
   const report = {
     title: req.body.title,

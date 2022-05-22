@@ -4,27 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const User = Models.User
 
-async function addUser(req, res){
-  const hashPass = await bcrypt.hash(req.body.password, 10);
-  
-  const user = {
-    name: req.body.name,
-    email: req.body.email,
-    password: hashPass
-  }
-
-  if(User.findOne({where: {email: user.email}})) return res.status(409).send({"message": "User already exists"})
-  
-  try{
-    await User.create(user);
-    res.status(201).json(user);
-  }
-  catch(err){
-    res.status(500).send(err.message);
-  }
-}
-
-async function loginUser (req, res) {
+const loginUser = async (req, res) => {
   const user = await User.findOne({where: {email: req.body.email}})
   if(user == null){
     return res.status(400).json({"message": "User not found"});
@@ -45,12 +25,23 @@ async function loginUser (req, res) {
     res.status(500).send(err.message);
   }
   
-}
+};
 
 function generateToken(payload){
   return jwt.sign({id: payload}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "10m" });
-}
+};
 
+const refreshToken = async (req, res) => {
+  const refreshToken = req.body.token
+  if(refreshToken == null) return res.sendStatus(401)
+  if(!tokenRefresh.includes(refreshToken)) return res.sendStatus(403)
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    const accessToken = generateToken({name: user.name});
+    res.header('auth-token', accessToken);
+    res.sendStatus(200);
+  })
+};
 
-module.exports.addUser = addUser;
+//module.exports.logoutUser = logoutUser;
+module.exports.refreshToken = refreshToken;
 module.exports.loginUser = loginUser;
