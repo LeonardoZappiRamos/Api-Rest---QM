@@ -4,11 +4,16 @@ require('dotenv').config()
 
 const { 
   addUser,
-  deleUser
+  deleUser,
+  listUsers,
+  findUser
 } = require('../controllers/user.controller');
+
+routes.get('/list', listUsers)
+routes.get('/byId', findUser);
 
 routes.post('/register', addUser);
 
-routes.delete('/deleted', deleUser);
+routes.delete('/remove', deleUser);
 
-module.exports = routes;
+module.exports = routes; 

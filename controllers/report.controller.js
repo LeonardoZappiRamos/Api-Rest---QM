@@ -14,8 +14,6 @@ const addReport = async (req, res) => {
   res.status(201).json(report)
 }
 
-module.exports.addReport = addReport
-
 const listReports = async (req, res) => {
   const role = req.body.Role;
   console.log(role);
@@ -41,4 +39,15 @@ const listReports = async (req, res) => {
   }
 };
 
-module.exports.listReports = listReports
+const delReport = (req, res) => {
+  res.status(200).json({message: "Mensagem de Teste"})
+};
+
+const executeReport = (req, res) => {
+  res.status(200).json({message: "Mensagem de Teste"})
+};
+
+module.exports.listReports = listReports;
+module.exports.addReport = addReport;
+module.exports.executeReport = executeReport;
+module.exports.delReport = delReport;

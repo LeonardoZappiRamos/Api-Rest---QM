@@ -11,6 +11,6 @@ const {
 routes.get('/list', verifyJWT, listReports);
 routes.get('/execute', verifyJWT, executeReport);
 
-routes.post('/register', addReport);
+routes.post('/register', verifyJWT, addReport);
 
 module.exports = routes;

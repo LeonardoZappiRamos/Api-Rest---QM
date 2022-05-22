@@ -6,7 +6,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Report extends Model {
     static associate(models) {
-      this.hasOne(models.Role, {foreignKey: 'id_role', as: 'role' })
+      this.belongsTo(models.Role, { foreignKey: 'id_role', as: 'role' })
     }
   }
 
