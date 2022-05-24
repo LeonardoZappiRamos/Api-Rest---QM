@@ -1,17 +1,24 @@
+const Models = require('../models');
 const fs = require('fs');
+const multer = require('multer');
+const { init } = require('../database/oracledb/index');
+
+const Report = Models.Report;
 
 require('dotenv').config();
 
 const dirname = process.env.DIR_REPORTS.toString();
 
 const addReport = async (req, res) => {
+  const sql  = req.body.sql;
 
   const report = {
     title: req.body.title,
-    consult: dirname.toString()+'/'+req.body.title,
+    consult: 'teste',
     role: req.body.role,
   }
-  res.status(201).json(report)
+
+  res.status(200).json({report, sql})
 }
 
 const listReports = async (req, res) => {
@@ -37,6 +44,11 @@ const listReports = async (req, res) => {
   }catch (err) {
     res.status(500).send(err.stack);
   }
+
+};
+
+const searchReport = (req, res) => {
+  res.status(200).json({message: "Mensagem de Teste"})
 };
 
 const delReport = (req, res) => {
@@ -51,3 +63,4 @@ module.exports.listReports = listReports;
 module.exports.addReport = addReport;
 module.exports.executeReport = executeReport;
 module.exports.delReport = delReport;
+module.exports.searchReport = searchReport;
