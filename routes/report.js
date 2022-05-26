@@ -1,8 +1,7 @@
 const routes = require('express').Router();
-const multer = require('multer');
-const verifyJWT = require('../middleware/verifyAuth')
 
-const uploader = multer({dest: 'src/'});
+const verifyJWT = require('../middleware/verifyAuth')
+const { uploader } = require('../middleware/upload.middleware');;
 
 const { 
   addReport,
@@ -12,14 +11,14 @@ const {
   searchReport
 } = require('../controllers/report.controller');
 
-routes.get('/list', listReports);
+routes.get('/list', verifyJWT, listReports);
 
-routes.get('/rep', searchReport);
+routes.get('/rep', verifyJWT, searchReport);
 
-routes.get('/execute', executeReport);
+routes.get('/execute', verifyJWT, executeReport);
 
-routes.post('/register', uploader.single('sql'), addReport);
+routes.post('/register', verifyJWT, uploader.single('sql'), addReport);
 
-routes.delete('/remove', delReport);
+routes.delete('/remove', verifyJWT, delReport);
 
 module.exports = routes;

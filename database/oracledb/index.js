@@ -1,47 +1,38 @@
 const oracledb = require('oracledb');
+const dbConfig = require("../../config/configOracle");
 
-require('dotenv').config();
+const libPath = 'C:\\oracle\\instantclient_11_2_64'
 
-dir = 'D:\\oracle\\orant\\instantclient_11_2'
-
-const init = async () => {
+async function connection() {
+  oracledb.initOracleClient({ libDir: libPath })
   try {
-    oracledb.initOracleClient({
-      libDir: dir
-    });
-    const conn = await oracledb.getConnection({
-      user: process.env.ORACLE_DATABASE_USER,
-      password: process.env.ORACLE_DATABASE_PASSWORD,
-      connectString: process.env.ORACLE_DATABASE_STRING
-    });
-
-    return conn;
-  }catch (err) {
-    console.log(err);
-    process.exit(1);
+    const poll = await oracledb.createPool(dbConfig.hrPool);
+  }catch(e){
+    if(e) throw e;
   }
 };
 
-const close = async (connection) => {
+const close = async () => {
   try {
-    oracledb.close(connection);
-  }catch (err) {
-    console.log(err);
+    await oracledb.getPool().close(0)
+  }catch(e) {
+    if(e) return e;
     process.exit(1);
   }
-};
+}
 
-const execute = async (connection, sqlString) => {
-  try {
-    const result = await connection.execute(sqlString);
-
+const execute = async (query) => {
+  try{
+    const connection = await oracledb.getConnection(); 
+    const result = await connection.execute(query);
+    await connection.close();
     return result;
-  }catch (err) {
-    console.log(err);
-    process.exit(1);
+  }catch(e) {
+    if(e) throw e;
+    console.log(e)
   }
-};
+}
 
-module.exports.init = init;
+module.exports.connection = connection;
 module.exports.close = close;
 module.exports.execute = execute;
