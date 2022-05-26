@@ -1,7 +1,7 @@
 const routes = require('express').Router();
 
 const verifyJWT = require('../middleware/verifyAuth')
-const { uploader } = require('../middleware/upload.middleware');;
+const { uploader } = require('../middleware/uploader');;
 
 const { 
   addReport,

@@ -9,8 +9,8 @@ const {
   findUser
 } = require('../controllers/user.controller');
 
-routes.get('/list', listUsers)
-routes.get('/byId', findUser);
+routes.get('/list', listUsers);
+routes.get('/find', findUser);
 
 routes.post('/register', addUser);
 

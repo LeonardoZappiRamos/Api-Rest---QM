@@ -1,7 +1,8 @@
 const Models = require('../models');
+const path = require('path');
 const fs = require('fs');
 
-const { connection, close, execute } = require('../database/oracledb/index');
+const { close, execute } = require('../database/oracledb/index');
 
 const Report = Models.Report;
 
@@ -37,11 +38,11 @@ const listReports = async (req, res) => {
   }
 };
 
-const searchReport = (req, res) => {
+const searchReport = async (req, res) => {
   res.status(200).json({message: "Mensagem de Teste"})
 };
 
-const delReport = (req, res) => {
+const delReport = async (req, res) => {
   try {
     const report = await Report.findOne({where: {id: req.body.id}})
     await Report.destroy({where: {id: report.id}})
@@ -51,13 +52,14 @@ const delReport = (req, res) => {
   }
 };
 
-const executeReport = (req, res) => {
+const executeReport = async (req, res) => {
   try {
     const report = await Report.findOne({where: {id: req.body.id}})
     const dir =  report.consulting
     const data = fs.readFileSync(dir, 'utf8').toString();
     //const teste = 'SELECT * FROM DUAL'
     const result = await execute(data)
+    await close();
     res.status(200).json(result)
   }catch(err) {
     if(err) throw err.message;

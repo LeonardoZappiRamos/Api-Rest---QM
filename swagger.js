@@ -1,9 +1,7 @@
-
 const swaggerAutogen = require('swagger-autogen')()
 
 const outputFile = './swagger_output.json';
-const endpointsFiles = ['./src/routes/index',
-                        './src/routes/user' ];
+const endpointsFiles = [ './index' ];
 
 swaggerAutogen(outputFile, endpointsFiles);
 
@@ -19,31 +17,41 @@ const doc = {
   consumes: ['application/json'],
   produces: ['application/json'],
   securityDefinitions: {
-    JWT: {
-      description: 'JWT token',
+    JSONWebToken: {
+      description: 'JSON Web Token',
       type: 'apiKey',
       in: 'header',
-      name: 'Authorization',
+      name: 'auth-token',
     },
   },
   tags: [
-    {
-      "name": "Index",
-      "description": "Views"
-    },
     {
       "name": "User",
       "description": "Rota do usuário"
     }
   ],
   definitions:{
-    Index: {
-      description: "Nessa rota ficara as views da API"
-    }
+    User: {
+      id: 1,
+      name: "username",
+      email: "username@example.com",
+      password: "password",
+      role: 1
+    },
+    Role: {
+      id: 1,
+      name: "role",
+    },
+    Report: {
+      id: 1,
+      title: "Report Title",
+      dir: "/diretorio/report title.sql",
+      role: 1,
+    },
   },
 }
 
 swaggerAutogen(outputFile, endpointsFiles, doc).then(() => {
-  require('./Server')
+  require('./index')
 })
 

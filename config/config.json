@@ -5,5 +5,12 @@
     "database": "Query-Manager",
     "host": "localhost",
     "dialect": "mysql"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "-iSNfSZJPy5!fqd",
+    "database": "postgres",
+    "host": "db.qkbadsdiuqmdlmdntpsq.supabase.co",
+    "dialect":"postgres"
   }
 }
