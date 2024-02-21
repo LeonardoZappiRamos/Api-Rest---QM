@@ -1,7 +1,7 @@
 const oracledb = require('oracledb');
 const dbConfig = require("../../config/configOracle");
 
-const libPath = 'C:\\oracle\\instantclient_11_2_64'
+const libPath = 'D:\\oracle\\instantclient_21_3'
 
 async function connection() {
   oracledb.initOracleClient({ libDir: libPath })

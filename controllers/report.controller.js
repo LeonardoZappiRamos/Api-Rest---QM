@@ -17,9 +17,15 @@ const addReport = async (req, res) => {
     consulting: sqlLocal,
     role: req.body.role,
   }
-  if(rep.title == null || rep.title == undefined) return res.status(400).json({"message": "The title is required"})
-  if(rep.consulting == null || rep.consulting == undefined) return res.status(400).json({"message": "The consulting is required"})
-  if(rep.role == null || rep.role == undefined) return res.status(400).json({"message": "The role is required"})
+  if(rep.title == null || rep.title == undefined){
+    return res.status(400).json({"message": "The title is required"})
+  } 
+  if(rep.consulting == null || rep.consulting == undefined){
+    return res.status(400).json({"message": "The consulting is required"})
+  } 
+  if(rep.role == null || rep.role == undefined){
+    return res.status(400).json({"message": "The role is required"})
+  } 
   try{  
     await Report.create(rep);
     res.sendStatus(201)
