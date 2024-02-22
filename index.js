@@ -50,7 +50,7 @@ async function start(){
   try {
     await connection();
     await db.sequelize.authenticate();
-    console.log('DataBase Connection Started')
+    console.log('DataBase connection was a success.')
   }catch(err){
     if(err){
       throw err;
