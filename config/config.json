@@ -1,16 +1,10 @@
 {
   "development": {
-    "username": "root",
-    "password": "1829adm@123#",
-    "database": "Query-Manager",
-    "host": "localhost",
-    "dialect": "mysql"
-  },
-  "test": {
     "username": "postgres",
-    "password": "-iSNfSZJPy5!fqd",
+    "password": "admin123",
     "database": "postgres",
-    "host": "db.qkbadsdiuqmdlmdntpsq.supabase.co",
+    "host": "localhost",
+    "port": "5432",
     "dialect":"postgres"
   }
 }

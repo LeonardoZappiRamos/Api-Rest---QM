@@ -8,7 +8,7 @@ const {
   listRole
 } = require('../controllers/role.controller');
 
-routes.get('/', listRole);
+routes.get('/list', listRole);
 
 routes.post('/register', addRole);
 
